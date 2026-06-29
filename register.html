@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Create Account</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+</head>
+<body class="register-page">
+
+  <canvas id="particleCanvas"></canvas>
+
+  <div class="page-wrap">
+    <div class="card card--wide" id="card">
+      <div class="card-blob"></div>
+
+      <div class="card-header">
+        <div class="avatar-ring">
+          <div class="avatar-inner">
+            <i class="fas fa-user-plus"></i>
+          </div>
+        </div>
+        <h1 class="card-title">Create account</h1>
+        <p class="card-sub">Fill in your details to get started</p>
+      </div>
+
+      <form id="registerForm" novalidate>
+
+        <div class="row-two">
+          <div class="field anim-field" id="grp-fname" style="--i:0">
+            <label for="fname">First name</label>
+            <div class="input-box">
+              <i class="fas fa-user"></i>
+              <input type="text" id="fname" placeholder="Jagadeesh" autocomplete="given-name"/>
+            </div>
+            <span class="err" id="err-fname"></span>
+          </div>
+
+          <div class="field anim-field" id="grp-lname" style="--i:1">
+            <label for="lname">Last name</label>
+            <div class="input-box">
+              <i class="fas fa-user"></i>
+              <input type="text" id="lname" placeholder="K" autocomplete="family-name"/>
+            </div>
+            <span class="err" id="err-lname"></span>
+          </div>
+        </div>
+
+        <div class="field anim-field" id="grp-remail" style="--i:2">
+          <label for="remail">Email</label>
+          <div class="input-box">
+            <i class="fas fa-envelope"></i>
+            <input type="email" id="remail" placeholder="you@example.com" autocomplete="email"/>
+          </div>
+          <span class="err" id="err-remail"></span>
+          <span class="hint" id="hint-email"></span>
+        </div>
+
+        <div class="field anim-field" id="grp-phone" style="--i:3">
+          <label for="phone">Phone <span class="optional">(optional)</span></label>
+          <div class="input-box">
+            <i class="fas fa-phone"></i>
+            <input type="tel" id="phone" placeholder="+91 9XXXXXXXXX" autocomplete="tel"/>
+          </div>
+          <span class="err" id="err-phone"></span>
+        </div>
+
+        <div class="field anim-field" id="grp-rpw" style="--i:4">
+          <label for="rpw">Password</label>
+          <div class="input-box">
+            <i class="fas fa-lock"></i>
+            <input type="password" id="rpw" placeholder="Min 8 characters" autocomplete="new-password"/>
+            <button type="button" class="eye-btn" onclick="toggleEye('rpw','eye2')">
+              <i class="fas fa-eye" id="eye2"></i>
+            </button>
+          </div>
+          <ul class="pw-rules" id="pw-rules">
+            <li id="rule-len"><i class="fas fa-circle"></i> At least 8 characters</li>
+            <li id="rule-upper"><i class="fas fa-circle"></i> One uppercase letter</li>
+            <li id="rule-num"><i class="fas fa-circle"></i> One number</li>
+            <li id="rule-symbol"><i class="fas fa-circle"></i> One special character</li>
+          </ul>
+          <div class="strength-bar">
+            <div class="strength-fill" id="str-fill"></div>
+          </div>
+          <span class="strength-txt" id="str-txt"></span>
+          <span class="err" id="err-rpw"></span>
+        </div>
+
+        <div class="field anim-field" id="grp-cpw" style="--i:5">
+          <label for="cpw">Confirm password</label>
+          <div class="input-box">
+            <i class="fas fa-lock"></i>
+            <input type="password" id="cpw" placeholder="Re-enter password" autocomplete="new-password"/>
+            <button type="button" class="eye-btn" onclick="toggleEye('cpw','eye3')">
+              <i class="fas fa-eye" id="eye3"></i>
+            </button>
+          </div>
+          <span class="err" id="err-cpw"></span>
+          <span class="match-ok hidden" id="match-ok"><i class="fas fa-check-circle"></i> Passwords match</span>
+        </div>
+
+        <div class="field anim-field" id="grp-terms" style="--i:6">
+          <label class="check-label">
+            <input type="checkbox" id="terms"/>
+            <span class="check-box"></span>
+            I agree to the <a href="#">Terms</a> &amp; <a href="#">Privacy Policy</a>
+          </label>
+          <span class="err" id="err-terms"></span>
+        </div>
+
+        <div class="anim-field" style="--i:7">
+          <button type="submit" class="btn-main" id="regBtn">
+            <span id="regTxt">Create Account</span>
+            <span id="regLoad" class="spin hidden"><i class="fas fa-circle-notch fa-spin"></i></span>
+          </button>
+        </div>
+
+      </form>
+
+      <div class="toast hidden" id="reg-toast"></div>
+      <p class="switch anim-field" style="--i:8">Already have an account? <a href="index.html">Sign in</a></p>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
