@@ -333,7 +333,7 @@ $all = mysqli_query($conn, "SELECT u.*, r.role_name FROM users u LEFT JOIN roles
 
   <!-- NAVBAR -->
   <nav class="dash-nav">
-    <div class="dash-nav-logo">HELLO ADMIN !<span></span></div>
+    <div class="dash-nav-logo">JAG<span>.</span></div>
     <div class="dash-nav-right">
       <span class="dash-greeting">Hello, <strong><?= htmlspecialchars($user['first_name']) ?></strong> 👋</span>
       <a href="logout.php" class="btn-logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
