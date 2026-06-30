@@ -7,7 +7,6 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
-// Only admins can delete users
 if ($_SESSION['role_id'] != 2) {
     echo json_encode(['status' => 'error', 'message' => 'Permission denied. Admins only.']);
     exit();
@@ -15,7 +14,6 @@ if ($_SESSION['role_id'] != 2) {
 
 $id = intval($_POST['id']);
 
-// Prevent self-delete
 if ($id === intval($_SESSION['user_id'])) {
     echo json_encode(['status' => 'error', 'message' => 'You cannot delete your own account.']);
     exit();

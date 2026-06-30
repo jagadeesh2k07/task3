@@ -11,14 +11,12 @@ $id      = $_SESSION['user_id'];
 $success = '';
 $error   = '';
 
-// Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $first_name = trim($_POST['first_name']);
     $last_name  = trim($_POST['last_name']);
     $email      = trim($_POST['email']);
     $phone      = trim($_POST['phone']);
 
-    // Email uniqueness check (exclude current user)
     $chk = mysqli_prepare($conn, "SELECT id FROM users WHERE email = ? AND id != ?");
     mysqli_stmt_bind_param($chk, "si", $email, $id);
     mysqli_stmt_execute($chk);
@@ -26,12 +24,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (mysqli_stmt_num_rows($chk) > 0) {
         $error = "That email is already in use by another account.";
     } else {
-        // Handle avatar upload
         $pic_update = '';
         if (!empty($_FILES['profile_pic']['name'])) {
             $allowed   = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
             $mime      = mime_content_type($_FILES['profile_pic']['tmp_name']);
-            $max_size  = 2 * 1024 * 1024; // 2 MB
+            $max_size  = 2 * 1024 * 1024;
 
             if (!in_array($mime, $allowed)) {
                 $error = "Only JPG, PNG, GIF, or WEBP images are allowed.";
@@ -51,13 +48,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         if (!$error) {
-            // Handle optional password change
             $new_password = $_POST['new_password'] ?? '';
             $cur_password = $_POST['current_password'] ?? '';
             $conf_password = $_POST['confirm_password'] ?? '';
 
             if ($new_password) {
-                // Verify current password first
                 $pstmt = mysqli_prepare($conn, "SELECT password FROM users WHERE id = ?");
                 mysqli_stmt_bind_param($pstmt, "i", $id);
                 mysqli_stmt_execute($pstmt);
@@ -102,7 +97,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// Fetch fresh user data
 $stmt   = mysqli_prepare($conn, "SELECT * FROM users WHERE id = ?");
 mysqli_stmt_bind_param($stmt, "i", $id);
 mysqli_stmt_execute($stmt);

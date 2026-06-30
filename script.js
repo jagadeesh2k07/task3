@@ -1,6 +1,5 @@
 'use strict';
 
-/* ── PARTICLE CANVAS ─────────────────────────────── */
 const canvas = document.getElementById('particleCanvas');
 if (canvas) {
   const ctx = canvas.getContext('2d');
@@ -57,7 +56,6 @@ if (canvas) {
   drawParticles();
 }
 
-/* ── HELPERS ─────────────────────────────────────── */
 const $ = id => document.getElementById(id);
 
 function setErr(grp, errId, msg) {
@@ -103,7 +101,6 @@ function setLoad(btnId, txtId, loadId, on) {
 const validEmail = v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim());
 const validPhone = v => /^[+]?[\d\s\-()]{7,15}$/.test(v.trim());
 
-/* ── TOGGLE PASSWORD VISIBILITY ──────────────────── */
 function toggleEye(inputId, iconId) {
   const inp  = $(inputId);
   const icon = $(iconId);
@@ -113,7 +110,6 @@ function toggleEye(inputId, iconId) {
   icon.className = show ? 'fas fa-eye-slash' : 'fas fa-eye';
 }
 
-/* ── SOCIAL BUTTONS ──────────────────────────────── */
 (function initSocialBtns() {
   const g = $('googleBtn');
   const h = $('githubBtn');
@@ -121,7 +117,6 @@ function toggleEye(inputId, iconId) {
   if (h) h.addEventListener('click', () => window.open('https://github.com/login',    '_blank'));
 })();
 
-/* ── PASSWORD STRENGTH ───────────────────────────── */
 function getRules(pw) {
   return {
     len:   pw.length >= 8,
@@ -169,8 +164,6 @@ function updateBar(pw, fillId, txtId, rulePrefix) {
     txt.style.color  = map[s].c;
   }
 
-  // Update rule list items (only present on register page)
-  // HTML IDs: rule-len, rule-upper, rule-num, rule-symbol
   const ruleMap = {
     'rule-len':    rules.len,
     'rule-upper':  rules.upper,
@@ -186,7 +179,6 @@ function updateBar(pw, fillId, txtId, rulePrefix) {
   });
 }
 
-/* ── CONFIRM-PASSWORD MATCH ──────────────────────── */
 /**
  * @param {string} pw       - original password value
  * @param {string} cpw      - confirm-password value
@@ -210,14 +202,10 @@ function matchCheck(pw, cpw, grpId, errId, matchId) {
   }
 }
 
-/* ══════════════════════════════════════════════════
-   LOGIN PAGE
-══════════════════════════════════════════════════ */
 (function initLogin() {
   const form = $('loginForm');
   if (!form) return;
 
-  /* ── field live validation ── */
   $('email').addEventListener('blur', function () {
     const v = this.value.trim();
     if (!v)             return setErr('grp-email', 'err-email', 'Email is required.');
@@ -238,7 +226,6 @@ function matchCheck(pw, cpw, grpId, errId, matchId) {
     if (this.value) clrField('grp-pass', 'err-pass');
   });
 
-  /* ── submit ── */
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     let ok = true;
@@ -280,20 +267,15 @@ function matchCheck(pw, cpw, grpId, errId, matchId) {
   });
 })();
 
-/* ══════════════════════════════════════════════════
-   FORGOT PASSWORD MODAL  (index.html only)
-══════════════════════════════════════════════════ */
 (function initForgotPassword() {
   const overlay = $('fpOverlay');
-  if (!overlay) return;          // not on login page → bail
+  if (!overlay) return;
 
   const forgotLink = $('forgotLink');
   const closeBtn   = $('fpClose');
 
-  /* ── open / close ── */
   function openModal() {
     overlay.classList.remove('hidden');
-    // reset to step 1 every time it opens
     showStep(1);
     clrField('grp-fpemail', 'err-fpemail');
     const fpEmail = $('fpEmail');
@@ -313,17 +295,14 @@ function matchCheck(pw, cpw, grpId, errId, matchId) {
 
   if (closeBtn) closeBtn.addEventListener('click', closeModal);
 
-  // Close on backdrop click
   overlay.addEventListener('click', function (e) {
     if (e.target === overlay) closeModal();
   });
 
-  // Close on Escape
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape' && !overlay.classList.contains('hidden')) closeModal();
   });
 
-  /* ── step visibility ── */
   function showStep(n) {
     [1, 2, 3].forEach(i => {
       const el = $(`fpStep${i}`);
@@ -331,9 +310,6 @@ function matchCheck(pw, cpw, grpId, errId, matchId) {
     });
   }
 
-  /* ─────────────────────────────────────
-     STEP 1 — verify email
-  ───────────────────────────────────── */
   window.fpNext1 = function () {
     const email = $('fpEmail').value.trim();
 
@@ -344,7 +320,6 @@ function matchCheck(pw, cpw, grpId, errId, matchId) {
 
     setLoad('fpStep1Btn', 'fpStep1Txt', 'fpStep1Load', true);
 
-    // Check if email exists in the system
     const fd = new FormData();
     fd.append('email', email);
 
@@ -352,7 +327,6 @@ function matchCheck(pw, cpw, grpId, errId, matchId) {
       .then(res => res.json())
       .then(data => {
         setLoad('fpStep1Btn', 'fpStep1Txt', 'fpStep1Load', false);
-        // check_email.php returns { taken: true } when the email IS registered
         if (data.taken) {
           setOk('grp-fpemail', 'err-fpemail');
           showStep(2);
@@ -366,9 +340,6 @@ function matchCheck(pw, cpw, grpId, errId, matchId) {
       });
   };
 
-  /* ─────────────────────────────────────
-     STEP 2 — verify current password
-  ───────────────────────────────────── */
   window.fpNext2 = function () {
     const email   = $('fpEmail').value.trim();
     const currPw  = $('fpCurr').value;
@@ -390,7 +361,6 @@ function matchCheck(pw, cpw, grpId, errId, matchId) {
         if (data.status === 'success') {
           setOk('grp-fpcurr', 'err-fpcurr');
           showStep(3);
-          // wire up new-password strength bar now that step 3 is visible
           const fpNew = $('fpNew');
           if (fpNew) {
             fpNew.addEventListener('input', function () {
@@ -416,9 +386,6 @@ function matchCheck(pw, cpw, grpId, errId, matchId) {
       });
   };
 
-  /* ─────────────────────────────────────
-     STEP 3 — set new password
-  ───────────────────────────────────── */
   window.fpSubmit = function () {
     const email  = $('fpEmail').value.trim();
     const newPw  = $('fpNew').value;
@@ -463,14 +430,10 @@ function matchCheck(pw, cpw, grpId, errId, matchId) {
   };
 })();
 
-/* ══════════════════════════════════════════════════
-   REGISTER PAGE
-══════════════════════════════════════════════════ */
 (function initRegister() {
   const form = $('registerForm');
   if (!form) return;
 
-  /* ── password strength & rules ── */
   $('rpw').addEventListener('input', function () {
     updateBar(this.value, 'str-fill', 'str-txt');
     clrField('grp-rpw', 'err-rpw');
@@ -478,12 +441,10 @@ function matchCheck(pw, cpw, grpId, errId, matchId) {
     if (cv) matchCheck(this.value, cv, 'grp-cpw', 'err-cpw', 'match-ok');
   });
 
-  /* ── confirm password ── */
   $('cpw').addEventListener('input', function () {
     matchCheck($('rpw').value, this.value, 'grp-cpw', 'err-cpw', 'match-ok');
   });
 
-  /* ── email availability check (debounced) ── */
   let emailTimer;
   $('remail').addEventListener('input', function () {
     clrField('grp-remail', 'err-remail');
@@ -496,7 +457,6 @@ function matchCheck(pw, cpw, grpId, errId, matchId) {
     }
   });
 
-  /* ── blur validators ── */
   $('fname').addEventListener('blur', function () {
     const v = this.value.trim();
     if (!v || v.length < 2) setErr('grp-fname', 'err-fname', 'Enter your first name.');
@@ -533,7 +493,6 @@ function matchCheck(pw, cpw, grpId, errId, matchId) {
     matchCheck($('rpw').value, this.value, 'grp-cpw', 'err-cpw', 'match-ok');
   });
 
-  /* ── submit ── */
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     let ok = true;
@@ -596,9 +555,6 @@ function matchCheck(pw, cpw, grpId, errId, matchId) {
   });
 })();
 
-/* ══════════════════════════════════════════════════
-   EMAIL AVAILABILITY CHECK (register page)
-══════════════════════════════════════════════════ */
 function checkEmailAjax(val, hintId) {
   const hint = $(hintId);
   if (!hint) return;

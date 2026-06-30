@@ -34,7 +34,6 @@ body {
   overflow-x: hidden;
 }
 
-/* ── Canvas ── */
 #particleCanvas {
   position: fixed;
   top: 0; left: 0;
@@ -43,7 +42,6 @@ body {
   pointer-events: none;
 }
 
-/* ── Page wrap ── */
 .page-wrap {
   position: relative;
   z-index: 1;
@@ -55,7 +53,6 @@ body {
   padding: 40px 16px;
 }
 
-/* ── Card ── */
 .card {
   position: relative;
   z-index: 1;
@@ -79,7 +76,6 @@ body {
   to   { opacity: 1; transform: scale(1)   translateY(0);    }
 }
 
-/* ── Card blob ── */
 .card-blob {
   position: absolute;
   top: 0; left: 50%;
@@ -95,7 +91,6 @@ body {
   50%       { opacity: 1;   width: 80%; }
 }
 
-/* ── Card header ── */
 .card-header {
   text-align: center;
   margin-bottom: 26px;
@@ -106,7 +101,6 @@ body {
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ── Avatar ── */
 .avatar-ring {
   width: 64px; height: 64px;
   border-radius: 50%;
@@ -147,7 +141,6 @@ body {
   color: var(--text-muted);
 }
 
-/* ── Staggered field animation ── */
 .anim-field {
   opacity: 0;
   animation: fieldSlideUp 0.45s calc(0.25s + var(--i, 0) * 0.07s) cubic-bezier(.22,1,.36,1) both;
@@ -157,7 +150,6 @@ body {
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ── Field ── */
 .field { margin-bottom: 16px; }
 
 .field label {
@@ -183,7 +175,6 @@ body {
 }
 .forgot:hover { color: #ffb673; letter-spacing: 0.3px; }
 
-/* ── Input box ── */
 .input-box {
   position: relative;
   display: flex;
@@ -222,7 +213,6 @@ body {
   transform: scale(1.1);
 }
 
-/* shake animation for error fields */
 .field.has-error .input-box input {
   border-color: var(--err);
   background: var(--err-bg);
@@ -271,7 +261,6 @@ body {
 }
 .match-ok i { margin-right: 3px; }
 
-/* ── Eye button ── */
 .eye-btn {
   position: absolute;
   right: 11px;
@@ -287,7 +276,6 @@ body {
 }
 .eye-btn:hover { color: var(--accent-color); transform: scale(1.2); }
 
-/* ── PW rules ── */
 .pw-rules {
   list-style: none;
   margin-top: 9px;
@@ -313,7 +301,6 @@ body {
 .pw-rules li.met { color: var(--ok); transform: translateX(2px); }
 .pw-rules li.met i { color: var(--ok); transform: scale(1.2) rotate(0deg); }
 
-/* ── Strength bar ── */
 .strength-bar {
   height: 4px;
   background: var(--accent-dim);
@@ -335,14 +322,12 @@ body {
   transition: color 0.3s ease;
 }
 
-/* ── Row two ── */
 .row-two {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 12px;
 }
 
-/* ── Checkbox ── */
 .check-label {
   display: flex;
   align-items: flex-start;
@@ -386,7 +371,6 @@ body {
 .check-label a { color: var(--accent-color); text-decoration: none; }
 .check-label a:hover { color: #ffb673; }
 
-/* ── Button ── */
 .btn-main {
   width: 100%;
   padding: 13px;
@@ -428,7 +412,6 @@ body {
 
 .spin i { font-size: 15px; }
 
-/* ── Toast ── */
 .toast {
   margin-top: 14px;
   padding: 11px 15px;
@@ -445,7 +428,6 @@ body {
   to   { opacity: 1; transform: scale(1)   translateY(0);   }
 }
 
-/* ── Switch ── */
 .switch {
   text-align: center;
   margin-top: 20px;
@@ -460,12 +442,8 @@ body {
 }
 .switch a:hover { color: #ffb673; }
 
-/* ── Hidden ── */
 .hidden { display: none !important; }
 
-/* ══════════════════════════════════════
-   FORGOT PASSWORD MODAL
-══════════════════════════════════════ */
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -549,7 +527,6 @@ body {
   color: var(--text-muted);
 }
 
-/* ── Step dots ── */
 .step-dots {
   display: flex;
   justify-content: center;
@@ -572,7 +549,6 @@ body {
   background: var(--ok);
 }
 
-/* ── Step transition ── */
 .fp-step {
   animation: stepIn 0.35s cubic-bezier(.22,1,.36,1) both;
 }
@@ -581,7 +557,6 @@ body {
   to   { opacity: 1; transform: translateX(0); }
 }
 
-/* ─── Animations ─── */
 @keyframes popIn {
   from { opacity: 0; transform: scale(0.94) translateY(16px); }
   to   { opacity: 1; transform: scale(1)    translateY(0);    }
@@ -591,7 +566,6 @@ body {
   to   { opacity: 1; transform: translateY(0);   }
 }
 
-/* ── Responsive ── */
 @media (max-width: 520px) {
   .card { padding: 30px 20px 24px; border-radius: 18px; }
   .card-title { font-size: 1.3rem; }

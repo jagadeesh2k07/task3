@@ -7,7 +7,6 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
-// Only admins can edit other users
 if ($_SESSION['role_id'] != 2) {
     header("Location: dashboard.php");
     exit();
@@ -15,7 +14,6 @@ if ($_SESSION['role_id'] != 2) {
 
 $id = intval($_GET['id'] ?? 0);
 
-// Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $first_name = trim($_POST['first_name']);
     $last_name  = trim($_POST['last_name']);
@@ -23,7 +21,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $phone      = trim($_POST['phone']);
     $role_id    = intval($_POST['role_id']);
 
-    // Email uniqueness (exclude the user being edited)
     $chk = mysqli_prepare($conn, "SELECT id FROM users WHERE email = ? AND id != ?");
     mysqli_stmt_bind_param($chk, "si", $email, $id);
     mysqli_stmt_execute($chk);
@@ -45,7 +42,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// Fetch user to edit
 $stmt   = mysqli_prepare($conn, "SELECT * FROM users WHERE id = ?");
 mysqli_stmt_bind_param($stmt, "i", $id);
 mysqli_stmt_execute($stmt);

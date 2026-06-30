@@ -4,7 +4,6 @@ include 'db.php';
 
 $action = $_POST['action'] ?? '';
 
-// STEP 1 — Check if email exists
 if ($action === 'check_email') {
     $email = trim($_POST['email']);
     $stmt  = mysqli_prepare($conn, "SELECT id FROM users WHERE email = ?");
@@ -13,7 +12,6 @@ if ($action === 'check_email') {
     mysqli_stmt_store_result($stmt);
 
     if (mysqli_stmt_num_rows($stmt) > 0) {
-        // Store email in session so next steps can't be called independently
         $_SESSION['fp_email'] = $email;
         $_SESSION['fp_step']  = 1;
         echo json_encode(['status' => 'success']);
@@ -23,9 +21,7 @@ if ($action === 'check_email') {
     exit();
 }
 
-// STEP 2 — Verify current password
 if ($action === 'verify_password') {
-    // Must have passed step 1
     if (empty($_SESSION['fp_email']) || ($_SESSION['fp_step'] ?? 0) < 1) {
         echo json_encode(['status' => 'error', 'message' => 'Session expired. Please start again.']);
         exit();
@@ -41,7 +37,7 @@ if ($action === 'verify_password') {
     $row    = mysqli_fetch_assoc($result);
 
     if ($row && password_verify($current, $row['password'])) {
-        $_SESSION['fp_step'] = 2; // Unlock step 3
+        $_SESSION['fp_step'] = 2;
         echo json_encode(['status' => 'success']);
     } else {
         echo json_encode(['status' => 'error', 'message' => 'Incorrect current password.']);
@@ -49,9 +45,7 @@ if ($action === 'verify_password') {
     exit();
 }
 
-// STEP 3 — Update new password
 if ($action === 'reset') {
-    // Must have passed both step 1 and step 2
     if (empty($_SESSION['fp_email']) || ($_SESSION['fp_step'] ?? 0) < 2) {
         echo json_encode(['status' => 'error', 'message' => 'Session expired or verification incomplete. Please start again.']);
         exit();
@@ -71,7 +65,6 @@ if ($action === 'reset') {
     mysqli_stmt_bind_param($stmt, "ss", $hashed, $email);
 
     if (mysqli_stmt_execute($stmt)) {
-        // Clear the reset session vars
         unset($_SESSION['fp_email'], $_SESSION['fp_step']);
         echo json_encode(['status' => 'success']);
     } else {

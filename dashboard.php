@@ -2,13 +2,11 @@
 session_start();
 include 'db.php';
 
-// If not logged in, redirect to login
 if (!isset($_SESSION['user_id'])) {
     header("Location: index.html");
     exit();
 }
 
-// Fetch user details
 $id   = $_SESSION['user_id'];
 $stmt = mysqli_prepare($conn, "SELECT * FROM users WHERE id = ?");
 mysqli_stmt_bind_param($stmt, "i", $id);
@@ -16,7 +14,6 @@ mysqli_stmt_execute($stmt);
 $result = mysqli_stmt_get_result($stmt);
 $user   = mysqli_fetch_assoc($result);
 
-// Fetch all users for CRUD table
 $all = mysqli_query($conn, "SELECT u.*, r.role_name FROM users u LEFT JOIN roles r ON u.role_id = r.id ORDER BY u.created_at DESC");
 ?>
 <!DOCTYPE html>
