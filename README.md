@@ -1,5 +1,7 @@
 ## Task 3 — User Authentication & Management System
 
+🔗 **Live Demo:** [jagadeesh-task3.infinityfree.io](https://jagadeesh-task3.infinityfree.io/)
+
 A complete authentication and user management system built with PHP, MySQLi, and Vanilla JS.
 
 ### Features
