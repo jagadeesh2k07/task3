@@ -28,3 +28,4 @@ A complete authentication and user management system built with PHP, MySQLi, and
 3. Start Apache & MySQL in XAMPP
 4. Open `http://localhost/task3/`
 5. Register → set your `role_id` to `2` in phpMyAdmin to become admin
+6. get access to my php file or u can create a repo of it 
